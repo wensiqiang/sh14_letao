@@ -20,7 +20,7 @@ $(function () {
         pageSize:pageSize
       },
       success:function (data) {
-        console.log(data);
+        // console.log(data);
         var html = template("tpl", data);
         $("tbody").html(html);
 
@@ -43,6 +43,35 @@ $(function () {
     });
   }
   render();
+  //点击启用按钮或者禁用按钮,弹出模态框
+  //这里的按钮都是动态渲染出来的,所以需要委托事件
+  $("tbody").on("click",".btn",function () {
+    $("#userModal").modal("show");
+    var id = $(this).parent().data("id");
+    var isDelete = $(this).parent().data("isDelete");
+    isDelete = isDelete === 1 ? 0 : 1;
+    //点击确定按钮,需要禁用或者启用这个用户
+    $(".btn_confirm").off().on("click",function () {
+      //发送ajax请求
+      $.ajax({
+        type:"post",
+        url:"/user/updateUser",
+        data:{
+          id:id,
+          isDelete: isDelete
+        },
+
+        success: function(data){
+          if(data.success){
+            $("#userModal").modal("hide");
+            render();
+          }
+        }
+      })
+
+
+    })
+  })
 
 
 

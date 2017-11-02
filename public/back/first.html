@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>乐淘管理系统-首页</title>
+  <title>乐淘管理系统-一级分类</title>
   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" href="lib/bootstrap-validator/css/bootstrapValidator.css">
   <link rel="stylesheet" href="lib/nprogress/nprogress.css">
@@ -64,7 +64,7 @@
 
     <!--内容区域-->
     <div class="lt_content">
-      <button class="btn_add btn btn-default mb20">添加分类</button>
+      <button class="btn_add btn_add btn btn-default mb20">添加分类</button>
       <table class="table table-bordered table-hover">
 
         <thead>
@@ -99,6 +99,29 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         <button type="button" class="btn_logout btn btn-primary">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="addModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">添加一级分类</h4>
+      </div>
+      <div class="modal-body">
+        <form id="form">
+          <div class="form-group">
+            <input type="text" class="form-control" id="categoryName" name="categoryName" placeholder="请输入一级分类">
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" form="form">取消</button>
+        <button type="submit" class=" btn btn-primary" form="form">确定</button>
       </div>
     </div>
   </div>
