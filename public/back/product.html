@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>乐淘管理系统-商品管理</title>
+  <title>乐淘管理系统-商品分类</title>
   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" href="lib/bootstrap-validator/css/bootstrapValidator.css">
   <link rel="stylesheet" href="lib/nprogress/nprogress.css">
@@ -57,13 +57,34 @@
     <!--面包屑导航-->
     <ol class="breadcrumb">
       <li><a href="#">管理系统</a></li>
-      <li class="active">商品管理</li>
+      <li><a href="#">分类管理</a></li>
+      <li class="active">二级分类</li>
     </ol>
 
 
     <!--内容区域-->
     <div class="lt_content">
+      <button class="btn_add btn btn-default mb20">添加商品</button>
+      <table class="table table-bordered table-hover">
 
+        <thead>
+        <tr>
+          <td width="5%">序号</td>
+          <td width="30%">商品名称</td>
+          <td width="20%">商品描述</td>
+          <td width="10%">商品库存</td>
+          <td width="10%">商品尺寸</td>
+          <td width="10%">商品状态</td>
+          <td width="15%">操作</td>
+        </tr>
+        </thead>
+        <tbody>
+   <!--挖个坑-->
+        </tbody>
+      </table>
+      <div class="text-right">
+        <ul id="paginator"></ul>
+      </div>
     </div>
 
   </div>
@@ -88,12 +109,106 @@
   </div>
 </div>
 
+<div class="modal fade" tabindex="-1" id="addModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">添加商品</h4>
+      </div>
+      <div class="modal-body">
+        <form id="form">
+          <div class="form-group">
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <span class="dropdown-text">请选择二级分类</span>
+                <!--这个可以用来传输数据，并且不会显示出来。-->
+                <input type="hidden" name="brandId" id="brandId">
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <!--挖个坑2-->
+              </ul>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="proName" name="proName" placeholder="请输入商品名称">
+          </div>
+          <div class="form-group">
+            <textarea name="proDesc" id="proDesc" rows="3" class="form-control" placeholder="请输入商品描述" style = resize:none;></textarea>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="num" name="num" placeholder="请输入商品库存">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="size" name="size" placeholder="请输入商品尺码(30-60)">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="oldPrice" name="oldPrice" placeholder="请输入商品原价">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="price" name="price" placeholder="请输入商品折扣价">
+          </div>
+          <div class="form-group">
+            <div class="fileupload_box">
+              <button class="btn btn-default">上传图片</button>
+              <input id="fileupload" type="file" name="pic1" class="btn btn-default" data-url="/category/addSecondCategoryPic" multiple>
+            </div>
+
+          </div>
+          <input type="hidden" name="statu" value="1">
+          <div class="form-group img_box">
+            <!--<img src="images/none.png" width="100" height="100" alt="">-->
+            <!--<img src="images/none.png" width="100" height="100" alt="">-->
+            <!--<img src="images/none.png" width="100" height="100" alt="">-->
+            <input type="hidden" name="productLogo" id="productLogo">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" form="form" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" form="form" class="btn_confirm btn btn-primary">确定</button>
+      </div>
+    </div>,
+  </div>
+</div>
+
+<script type="text/html" id="tpl">
+{{each rows v i }}
+<tr>
+  <td>{{(page-1)*size+i+1}}</td>
+  <td>{{v.proName}}</td>
+  <td>{{v.proDesc}}</td>
+  <td>{{v.num}}</td>
+  <td>{{v.size}}</td>
+  <td>{{v.statu===1?"已上架":"已下架"}}</td>
+  <td>
+    {{if v.statu ===0}}
+    <button class="btn btn-success" >上架</button>
+    {{else if v.statu ===1}}
+    <button class="btn btn-danger">下架</button>
+    {{/if}}
+  </td>
+</tr>
+{{/each}}
+</script>
+
+<script type="text/html" id="tpl2">
+{{each rows v i}}
+  <li><a href="jicascript:;" data-id="{{v.id}}">{{v.brandName}}</a></li>
+  {{/each}}
+</script>
 
 <script src="lib/jquery/jquery.js"></script>
+<script src="lib/jquery-fileupload/jquery.ui.widget.js"></script>
+<script src="lib/jquery-fileupload/jquery.fileupload.js"></script>
 <script src="lib/bootstrap/js/bootstrap.js"></script>
 <script src="lib/bootstrap-validator/js/bootstrapValidator.js"></script>
+<script src="lib/bootstrap-paginator/bootstrap-paginator.js"></script>
 <script src="lib/nprogress/nprogress.js"></script>
+<script src="lib/artTemplate/template-web.js"></script>
 <script src="js/common.js"></script>
-<script src="js/index.js"></script>
+<script src="js/product.js"></script>
 </body>
 </html>
